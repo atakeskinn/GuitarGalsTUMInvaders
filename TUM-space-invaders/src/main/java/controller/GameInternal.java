@@ -10,6 +10,12 @@ import model.Wave;
 
 public class GameInternal {
 
+    private static final String wave1 = "4, 6, 5, 20, 0," +
+                                        "S S S S S S" +
+                                        "S S S S S S" +
+                                        "S S S S S S" +
+                                        "S S S S S S";
+
 
     private Dimension2D size;
 
@@ -50,12 +56,13 @@ public class GameInternal {
     }
 
     private void setWave() {
-        //TODO: Wave stuff
+        currentWave = Wave.parseWaveInfo(wave1, size);
     }
 
     public void update() {
         //TODO: Game Logic Here
 		//TODO: Move entities, check for collisions, shoot
+        currentWave.update();
     }
 
 
@@ -63,7 +70,7 @@ public class GameInternal {
         return isRunning;
     }
 
-    public boolean hasWon() {
+    public Boolean hasWon() {
         return gameWon;
     }
 

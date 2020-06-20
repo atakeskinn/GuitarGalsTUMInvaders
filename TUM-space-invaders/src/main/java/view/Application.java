@@ -25,9 +25,9 @@ public class Application extends javafx.application.Application {
         // initialize GridPane and format
         // GridPanes are divided into columns and rows, like a table
         GridPane gridLayout = new GridPane();
-        gridLayout.setPrefSize(1005, 605); //1000+5, 600+5
-        gridLayout.setVgap(5);
-        gridLayout.setPadding(new Insets(5, 5, 5, 5));
+        gridLayout.setPrefSize(400, 600);
+
+        //gridLayout.setPadding(new Insets(5, 5, 5, 5));
 
         // add all components to the gridLayout
         // second parameter is column index, second parameter is row index of grid
@@ -43,7 +43,8 @@ public class Application extends javafx.application.Application {
     @Override
     public void stop() throws Exception {
         super.stop();
-        gameUI.stopGame();
+        if(gameUI!=null)
+            gameUI.stopGame();
     }
 
     /**
@@ -54,6 +55,7 @@ public class Application extends javafx.application.Application {
     }
 
     public static void main(String[] args) {
+        System.out.println("Started Application");
         Application.startApp(args);
     }
 }

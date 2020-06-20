@@ -21,11 +21,11 @@ import java.util.HashMap;
 public class GameUI extends Canvas implements Runnable {
 
 	//private static final Color backgroundColor = Color.WHITE;
-	private static final Image backgroundImage = getImage("");
+	private static final Image backgroundImage = getImage("spacebg.png");
 
 
 	private static final int SLEEP_TIME = 1000 / 25; // this gives us 25fps
-	private static final Dimension2D DEFAULT_SIZE = new Dimension2D(1000, 600);
+	private static final Dimension2D DEFAULT_SIZE = new Dimension2D(400, 600);
 	// attribute inherited by the JavaFX Canvas class
 	private GraphicsContext graphicsContext = this.getGraphicsContext2D();
 
@@ -39,8 +39,8 @@ public class GameUI extends Canvas implements Runnable {
 	// user control objects
 	private PlayerController playerController;
 
-	private HashMap<EnemyShip, Image> enemyImages;
-	private HashMap<Projectile, Image> projectileImages;
+	private HashMap<String, Image> enemyImages;
+	private HashMap<String, Image> projectileImages;
 
 	/**
 	 * Sets up all attributes, sets up all graphics
@@ -49,6 +49,7 @@ public class GameUI extends Canvas implements Runnable {
 	public GameUI() {
 		this.size = getPreferredSize();
 		gameSetup();
+		startGame();
 	}
 
 	/**
@@ -60,10 +61,10 @@ public class GameUI extends Canvas implements Runnable {
 	@Override
 	public void run() {
 		while (this.gameInternal.isRunning()) {
-			// updates fish positions and re-renders graphics
+			// updates positions and re-renders graphics
 			this.gameInternal.update();
 			// when this.gameBoard.hasWon() is null, do nothing
-			if (this.gameInternal.hasWon() == Boolean.FALSE) {
+			if (this.gameInternal.hasWon() != null && this.gameInternal.hasWon() == Boolean.FALSE) {
 				showAsyncAlert("You lost!");
 				this.stopGame();
 			} else if (this.gameInternal.hasWon() == Boolean.TRUE) {
@@ -115,6 +116,9 @@ public class GameUI extends Canvas implements Runnable {
 		this.enemyImages = new HashMap<>();
 		this.projectileImages = new HashMap<>();
 		this.playerController = new PlayerController(this, this.gameInternal.getPlayerShip());
+
+		enemyImages.put("simple", getImage("simple.png"));
+		enemyImages.put("greenie", getImage("greenie.png"));
 
 		paint(this.graphicsContext);
 	}
@@ -172,6 +176,10 @@ public class GameUI extends Canvas implements Runnable {
 	 */
 	private void paint(GraphicsContext graphics) {
 		graphics.drawImage(backgroundImage, 0, 0);
+
+		for(EnemyShip enemyShip : gameInternal.getCurrentWave().getListOfEnemies()) {
+			paintEnemyShip(enemyShip, graphics);
+		}
 	}
 
 	/**
@@ -184,6 +192,16 @@ public class GameUI extends Canvas implements Runnable {
 	}
 
 	/**
+	 * Show image of a player ship at the current position of the player ship.
+	 *
+	 * @param graphics used to draw changes
+	 */
+	private void paintEnemyShip(EnemyShip ship, GraphicsContext graphics) {
+		if(ship.isAlive())
+		graphics.drawImage(enemyImages.get(ship.getImage()), ship.getPos().getX(), ship.getPos().getY(), ship.getDimension().getWidth(), ship.getDimension().getHeight());
+	}
+
+	/**
 	 * Stops the game board and set the tool bar to default values.
 	 */
 	public void stopGame() {
@@ -193,7 +211,7 @@ public class GameUI extends Canvas implements Runnable {
 	}
 
 	/**
-	 * Method used to display alerts in moveFishes() Java 8 Lambda Functions: java
+	 * Method used to display alerts Java 8 Lambda Functions: java
 	 * 8 lambda function without arguments Platform.runLater Function:
 	 * https://docs.oracle.com/javase/8/javafx/api/javafx/application/Platform.html
 	 *
