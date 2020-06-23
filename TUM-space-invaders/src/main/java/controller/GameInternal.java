@@ -35,6 +35,9 @@ public class GameInternal {
         this.size = size;
         this.setWave();
         this.dataRecorder = new DataRecorder();
+        //You use this by adding:
+        //"this.gameUI.getGameInternal().getDataRecorder().recordData(Data.recordData(String Info));"
+        //to your Moment/Event in Code that you want to record
     }
 
     public DataRecorder getDataRecorder() { return dataRecorder; }
