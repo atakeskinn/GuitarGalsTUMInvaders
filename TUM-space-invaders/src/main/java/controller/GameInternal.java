@@ -27,13 +27,20 @@ public class GameInternal {
     private PlayerShip playerShip;
     private Wave currentWave;
     private SoundManager soundManager;
+    private DataRecorder dataRecorder;
 
     public GameInternal(Dimension2D size) {
         playerShip = new PlayerShip(); //250 ,30
         projectiles = new ArrayList<>();
         this.size = size;
         this.setWave();
+        this.dataRecorder = new DataRecorder();
+        //You use this by adding:
+        //"this.gameUI.getGameInternal().getDataRecorder().recordData(Data.recordData(String Info));"
+        //to your Moment/Event in Code that you want to record
     }
+
+    public DataRecorder getDataRecorder() { return dataRecorder; }
 
     public int getPlayerScore() {
         return playerScore;
