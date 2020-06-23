@@ -2,6 +2,7 @@ package controller;
 
 import javafx.event.EventHandler;
 import javafx.event.EventType;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import model.PlayerShip;
@@ -16,6 +17,8 @@ public class PlayerController {
 	    this.player = player;
 
         keyHandler = e -> {
+            //DO IT LIKE THIS ↓↓
+            //if(e.getCode() == KeyCode.A) do stuff {};
             //TODO: Key Press Handling
         };
 

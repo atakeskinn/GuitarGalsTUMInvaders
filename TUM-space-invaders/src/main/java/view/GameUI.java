@@ -118,8 +118,11 @@ public class GameUI extends Canvas implements Runnable {
 		this.projectileImages = new HashMap<>();
 		this.playerController = new PlayerController(this, this.gameInternal.getPlayerShip());
 
+		//add image resources
 		enemyImages.put("simple", getImage("simple.png"));
 		enemyImages.put("greenie", getImage("greenie.png"));
+		//DO IT LIKE THIS ↓↓
+		//projectileImages.put("projectile", getImage("projectile.png"));
 
 		paint(this.graphicsContext);
 	}
@@ -181,6 +184,8 @@ public class GameUI extends Canvas implements Runnable {
 		for(EnemyShip enemyShip : gameInternal.getCurrentWave().getListOfEnemies()) {
 			paintEnemyShip(enemyShip, graphics);
 		}
+
+		paintPlayerShip(graphics);
 	}
 
 	/**
@@ -189,7 +194,7 @@ public class GameUI extends Canvas implements Runnable {
 	 * @param graphics used to draw changes
 	 */
 	private void paintPlayerShip(GraphicsContext graphics) {
-
+		//TODO: implement after playership is implemented
 	}
 
 	/**
