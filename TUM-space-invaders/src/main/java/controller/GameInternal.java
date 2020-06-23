@@ -80,7 +80,8 @@ public class GameInternal {
             for (EnemyShip enemyShip : currentWave.getListOfEnemies()) {
                 boolean collided = testCollision(p.getPos(), p.getDimension(), enemyShip.getPos(), enemyShip.getDimension());
                 if(collided) {
-                    System.out.println("COLLIDED!");
+                    System.out.println("Collision!");
+                    soundManager.playEnemyDeathSound();
                     enemyShip.setAlive(false);
                     p.setAlive(false);
                 }
@@ -102,7 +103,7 @@ public class GameInternal {
      * Starts the game. Entities start to move and background music starts to play.
      */
     public void startGame() {
-        //playMusic();
+        playMusic();
         this.isRunning = true;
     }
 
