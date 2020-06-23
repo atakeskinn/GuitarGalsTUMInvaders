@@ -11,7 +11,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.EnemyShip;
-import model.Projectile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -110,41 +109,7 @@ public class GameUI extends Canvas implements Runnable {
 		this.gameInternal = new GameInternal(this.size);
 
 		//TODO: implement sound manager and then replace this one:
-		this.gameInternal.setSoundManager(new SoundManager() {
-			@Override
-			public void playBackgroundMusic() {
-			}
-
-			@Override
-			public void playPlayerShootSound() {
-
-			}
-
-			@Override
-			public void playEnemyShootSound() {
-
-			}
-
-			@Override
-			public void playPlayerDeathSound() {
-
-			}
-
-			@Override
-			public void playEnemyDeathSound() {
-
-			}
-
-			@Override
-			public void playWaveEndSound() {
-
-			}
-
-			@Override
-			public void stopBackgroundMusic() {
-
-			}
-		});
+		this.gameInternal.setSoundManager(new SoundManager());
 
 
 		this.widthProperty().set(this.size.getWidth());
