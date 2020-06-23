@@ -1,0 +1,7 @@
+SoundManager stuff (copy the implementation over from bumpers game, we already have the interface)
+Collision detection between player and projectiles,
+Collision detection between enemies and projectiles,
+Player class (should shoot!)
+Player Movement (PlayerController class)
+Enemy class (can create new types?)
+

@@ -9,7 +9,7 @@ public class Wave {
 	private static int spaceBetweenEnemies = 10, screenBorder = 5;
     private int width, height, speedX, speedY, difficulty;
     private Dimension2D screenSize;
-    List<EnemyShip> listOfEnemies = new ArrayList<>();
+    List<EnemyShip> listOfEnemies;
 
     public Wave(int width, int height, int speedX, int speedY, int difficulty, Dimension2D screenSize) {
         this.width = width;
@@ -173,12 +173,9 @@ public class Wave {
 		//if moving right
     	if(speedX > 0) {
 			EnemyShip rightMost = getRightMostEnemy().orElseThrow(() -> new IllegalStateException("No rightmost enemy present!"));
-			rightMost.setImage("greenie");
-			System.out.println(rightMost.getPos().toString());
 			if(rightMost.getPos().getX() + rightMost.dimension.getWidth() + screenBorder > screenSize.getWidth()) {
 				speedX = -speedX;
 				tempSpeedY = speedY;
-				rightMost.setAlive(false);
 			}
     	} else {
 			EnemyShip leftMost = getLeftMostEnemy().orElseThrow(() -> new IllegalStateException("No leftmost enemy present!"));
