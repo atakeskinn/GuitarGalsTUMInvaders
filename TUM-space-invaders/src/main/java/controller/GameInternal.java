@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Dimension2D;
-import model.PlayerShip;
-import model.Projectile;
-import model.Wave;
+import javafx.geometry.Point2D;
+import model.*;
 
 public class GameInternal {
 
@@ -38,6 +37,8 @@ public class GameInternal {
         //You use this by adding:
         //"this.gameUI.getGameInternal().getDataRecorder().recordData(Data.recordData(String Info));"
         //to your Moment/Event in Code that you want to record
+
+        createProjectile(new Point2D(150, 450), -6);
     }
 
     public DataRecorder getDataRecorder() { return dataRecorder; }
@@ -70,6 +71,22 @@ public class GameInternal {
         //TODO: Game Logic Here
 		//TODO: Move entities, check for collisions, shoot
         currentWave.update();
+
+        //update projectiles:
+        for(Projectile p : projectiles) {
+            p.update();
+
+            //test for collisions
+            for (EnemyShip enemyShip : currentWave.getListOfEnemies()) {
+                boolean collided = testCollision(p.getPos(), p.getDimension(), enemyShip.getPos(), enemyShip.getDimension());
+                if(collided) {
+                    System.out.println("COLLIDED!");
+                    enemyShip.setAlive(false);
+                    p.setAlive(false);
+                }
+            }
+        }
+        projectiles.removeIf(p -> !p.isAlive());
     }
 
 
@@ -110,4 +127,24 @@ public class GameInternal {
     public void stopMusic() {
         this.soundManager.stopBackgroundMusic();
     }
+
+    /**
+     * Create projectile at position, with speedY
+     * @param position position
+     * @param speedY speedY
+     */
+    public void createProjectile(Point2D position, double speedY) {
+        Projectile projectile = new SimpleProjectile(position, speedY);
+        projectiles.add(projectile);
+    }
+
+    public boolean testCollision(Point2D pos1, Dimension2D dim1, Point2D pos2, Dimension2D dim2) {
+
+        //p1s sides have no gap between them and p2s sides (better collision detection)
+        return pos1.getX() < pos2.getX() + dim2.getWidth() &&
+                pos1.getX() + dim1.getWidth() > pos2.getX() &&
+                size.getHeight() - pos1.getY() < size.getHeight() - pos2.getY() + dim2.getHeight() &&
+                size.getHeight() - pos1.getY() + dim1.getHeight() > size.getHeight() - pos2.getY();
+    }
+
 }

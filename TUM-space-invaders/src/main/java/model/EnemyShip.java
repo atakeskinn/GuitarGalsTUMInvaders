@@ -2,7 +2,7 @@ package model;
 
 import javafx.geometry.Dimension2D;
 
-import java.awt.geom.Point2D;
+import javafx.geometry.Point2D;
 
 public abstract class EnemyShip {
 	protected Point2D pos;
@@ -38,7 +38,7 @@ public abstract class EnemyShip {
 
 	public abstract void update();
 
-	public void move(int x, int y) {pos.setLocation(pos.getX() + x, pos.getY() + y);}
+	public void move(int x, int y) {pos = pos.add(x, y);}
 
 	public boolean isAlive() {
 		return alive;
