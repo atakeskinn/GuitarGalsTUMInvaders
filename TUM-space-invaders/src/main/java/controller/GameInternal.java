@@ -27,13 +27,17 @@ public class GameInternal {
     private PlayerShip playerShip;
     private Wave currentWave;
     private SoundManager soundManager;
+    private DataRecorder dataRecorder;
 
     public GameInternal(Dimension2D size) {
         playerShip = new PlayerShip(); //250 ,30
         projectiles = new ArrayList<>();
         this.size = size;
         this.setWave();
+        this.dataRecorder = new DataRecorder();
     }
+
+    public DataRecorder getDataRecorder() { return dataRecorder; }
 
     public int getPlayerScore() {
         return playerScore;
