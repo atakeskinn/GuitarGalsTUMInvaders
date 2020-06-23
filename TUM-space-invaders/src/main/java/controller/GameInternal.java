@@ -1,11 +1,11 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import model.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameInternal {
 
@@ -25,7 +25,7 @@ public class GameInternal {
     private List<Projectile> projectiles;
     private PlayerShip playerShip;
     private Wave currentWave;
-    private SoundManager soundManager;
+    private SoundManagerInterface soundManager;
     private DataRecorder dataRecorder;
 
     public GameInternal(Dimension2D size) {
@@ -59,7 +59,7 @@ public class GameInternal {
         return playerShip;
     }
 
-    public void setSoundManager(SoundManager soundManager) {
+    public void setSoundManager(SoundManagerInterface soundManager) {
         this.soundManager = soundManager;
     }
 

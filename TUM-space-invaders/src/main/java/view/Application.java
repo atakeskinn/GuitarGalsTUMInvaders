@@ -54,6 +54,11 @@ public class Application extends javafx.application.Application {
         launch(args);
     }
 
+    /**
+     * RUN THIS GAME USING: mvn javafx:run
+     * otherwise dependencies do not work correctly!
+     * @param args
+     */
     public static void main(String[] args) {
         System.out.println("Started Application");
         Application.startApp(args);
