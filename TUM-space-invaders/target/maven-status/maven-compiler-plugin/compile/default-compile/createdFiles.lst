@@ -6,6 +6,7 @@ view\GameUI.class
 model\EnemyShip.class
 model\Wave.class
 controller\SoundManagerInterface.class
+view\Toolbar.class
 controller\SoundManager.class
 model\SimpleEnemy.class
 controller\Data.class

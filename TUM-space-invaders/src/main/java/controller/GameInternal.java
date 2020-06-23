@@ -87,7 +87,10 @@ public class GameInternal {
                 }
             }
         }
+        currentWave.getListOfEnemies().removeIf(e -> !e.isAlive());
         projectiles.removeIf(p -> !p.isAlive());
+
+
     }
 
 

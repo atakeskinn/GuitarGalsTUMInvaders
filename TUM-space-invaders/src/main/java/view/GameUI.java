@@ -23,9 +23,10 @@ public class GameUI extends Canvas implements Runnable {
     //private static final Color backgroundColor = Color.WHITE;
     private static final Image backgroundImage = getImage("spacebg.png");
 
-
     private static final int SLEEP_TIME = 1000 / 25; // this gives us 25fps
     private static final Dimension2D DEFAULT_SIZE = new Dimension2D(400, 600);
+
+    private final Application gameWindow;
     // attribute inherited by the JavaFX Canvas class
     private GraphicsContext graphicsContext = this.getGraphicsContext2D();
 
@@ -45,10 +46,10 @@ public class GameUI extends Canvas implements Runnable {
     /**
      * Sets up all attributes, sets up all graphics
      */
-    public GameUI() {
+    public GameUI(Application gameWindow) {
         this.size = getPreferredSize();
+        this.gameWindow = gameWindow;
         gameSetup();
-        startGame();
     }
 
     /**
@@ -107,8 +108,6 @@ public class GameUI extends Canvas implements Runnable {
      */
     public void gameSetup() {
         this.gameInternal = new GameInternal(this.size);
-
-        //TODO: implement sound manager and then replace this one:
         this.gameInternal.setSoundManager(new SoundManager());
 
 
@@ -182,15 +181,23 @@ public class GameUI extends Canvas implements Runnable {
      */
     private void paint(GraphicsContext graphics) {
         graphics.drawImage(backgroundImage, 0, 0);
+        if(!gameInternal.isRunning())
+            return;
 
+        //update score
+        gameWindow.getToolbar().setScore(gameInternal.getPlayerScore());
+
+        //paint enemies
         for (EnemyShip enemyShip : gameInternal.getCurrentWave().getListOfEnemies()) {
             paintEnemyShip(enemyShip, graphics);
         }
 
+        //paint projectiles
         for (Projectile p : gameInternal.getProjectiles()) {
             paintProjectile(p, graphics);
         }
 
+        //paint player ship
         paintPlayerShip(graphics);
     }
 

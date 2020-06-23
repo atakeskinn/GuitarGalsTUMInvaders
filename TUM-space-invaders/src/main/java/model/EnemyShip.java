@@ -11,6 +11,15 @@ public abstract class EnemyShip {
 	protected boolean canShoot;
 	protected boolean alive;
 	protected String image;
+	protected int value;
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
 
 	public Point2D getPos() {return pos;};
 
