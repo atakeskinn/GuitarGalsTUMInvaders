@@ -102,7 +102,7 @@ public class GameInternal {
      * Starts the game. Entities start to move and background music starts to play.
      */
     public void startGame() {
-        playMusic();
+        //playMusic();
         this.isRunning = true;
     }
 
