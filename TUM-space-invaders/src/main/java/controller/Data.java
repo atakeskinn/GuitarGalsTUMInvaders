@@ -10,4 +10,16 @@ public class Data {
         this.time = time;
         this.info = info;
     }
+
+    public Data recordData(String info) {
+        return new Data(ZonedDateTime.now(), info);
+    }
+
+    public ZonedDateTime getTime() {
+        return this.time;
+    }
+
+    public String getInfo() {
+        return this.info;
+    }
 }
