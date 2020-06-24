@@ -28,6 +28,9 @@ public class GameInternal {
     private SoundManagerInterface soundManager;
     private DataRecorder dataRecorder;
 
+    private int counter = 0;
+
+
     public GameInternal(Dimension2D size) {
         playerShip = new PlayerShip(); //250 ,30
         projectiles = new ArrayList<>();
@@ -38,7 +41,8 @@ public class GameInternal {
         //"this.gameUI.getGameInternal().getDataRecorder().recordData(Data.recordData(String Info));"
         //to your Moment/Event in Code that you want to record
 
-        createProjectile(new Point2D(150, 450), -6);
+
+
     }
 
     public DataRecorder getDataRecorder() { return dataRecorder; }
@@ -89,6 +93,17 @@ public class GameInternal {
         }
         currentWave.getListOfEnemies().removeIf(e -> !e.isAlive());
         projectiles.removeIf(p -> !p.isAlive());
+
+        //for testing all sound files
+        if (this.counter == 100){
+            //createProjectile(new Point2D(150, 450), -6);
+            //this.soundManager.playPlayerDeathSound();
+        }
+        if (this.counter < 101){
+            this.counter = this.counter + 1;
+        }else{
+            this.counter = 0;
+        }
 
 
     }

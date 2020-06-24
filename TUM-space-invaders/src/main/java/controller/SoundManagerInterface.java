@@ -2,16 +2,20 @@ package controller;
 
 public interface SoundManagerInterface {
 
-	public static final String BACKGROUND_MUSIC_FILE = "newMusic.mp3";
-	public static final String PLAYER_SHOOT_SOUND_FILE = "audio/.mp3";
-	public static final String ENEMY_SHOOT_SOUND_FILE = "audio/.wav";
-	public static final String PLAYER_DEATH_SOUND_FILE = "audio/.wav";
+	public static final String BACKGROUND_MUSIC_FILE = "RealMusic.wav";
+	public static final String PLAYER_SHOOT_SOUND_FILE = "ShortPew.wav";
+	public static final String ENEMY_SHOOT_SOUND_FILE = "Badabing.wav";
+	public static final String PLAYER_DEATH_SOUND_FILE = "PlayerLose.wav";
+	public static final String ENEMY_DEATH_SOUND_FILE = "EnemyDeath.wav";
+	public static final String WAVE_END_SOUND_FILE = "WaveEnd.wav";
 
 
 	String getBackgroundMusicFilePath();
 	String getPlayerShootSoundFilePath();
 	String getEnemyShootSoundFilePath();
 	String getPlayerDeathSoundFilePath();
+	String getEnemyDeathSoundFilePath();
+	String getWaveEndSoundFilePath();
 
 	public void playBackgroundMusic();
 	public void playPlayerShootSound();

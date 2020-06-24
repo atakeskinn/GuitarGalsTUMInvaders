@@ -107,6 +107,7 @@ public class GameUI extends Canvas implements Runnable {
      * Renders graphics.
      */
     public void gameSetup() {
+
         this.gameInternal = new GameInternal(this.size);
         this.gameInternal.setSoundManager(new SoundManager());
 

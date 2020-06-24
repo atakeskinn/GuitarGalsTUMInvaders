@@ -10,7 +10,7 @@ public class SoundManager implements SoundManagerInterface{
 
     private MediaPlayer mediaPlayer;
     private boolean playingBackgroundMusic;
-    public boolean crashSoundPlayed = false;
+    //public boolean playerShootSoundPlayed = false;
 
     /**
      * Constructor, gets the media files from resources and sets the boolean
@@ -41,6 +41,15 @@ public class SoundManager implements SoundManagerInterface{
         return PLAYER_DEATH_SOUND_FILE;
     }
 
+    @Override
+    public String getEnemyDeathSoundFilePath() {
+        return ENEMY_DEATH_SOUND_FILE;
+    }
+
+    @Override
+    public String getWaveEndSoundFilePath() {
+        return WAVE_END_SOUND_FILE;
+    }
 
     /**
      * Checks if no music is currently running by checking the value of the
@@ -57,34 +66,40 @@ public class SoundManager implements SoundManagerInterface{
             // Loop for the main music sound:
             this.mediaPlayer.setOnEndOfMedia(() -> SoundManager.this.mediaPlayer.seek(Duration.ZERO));
             System.out.println("Started to play background music");
-            this.mediaPlayer.setVolume(0.1);;
+            this.mediaPlayer.setVolume(0.5);;
             this.mediaPlayer.play();
         }
     }
 
     @Override
     public void playPlayerShootSound() {
-
+        MediaPlayer sound = new MediaPlayer(loadAudioFile(getPlayerShootSoundFilePath()));
+        sound.play();
+        //this.playerShootSoundPlayed = true;
     }
 
     @Override
     public void playEnemyShootSound() {
-
+        MediaPlayer sound = new MediaPlayer(loadAudioFile(getEnemyShootSoundFilePath()));
+        sound.play();
     }
 
     @Override
     public void playPlayerDeathSound() {
-
+        MediaPlayer sound = new MediaPlayer(loadAudioFile(getPlayerDeathSoundFilePath()));
+        sound.play();
     }
 
     @Override
     public void playEnemyDeathSound() {
-
+        MediaPlayer sound = new MediaPlayer(loadAudioFile(getEnemyDeathSoundFilePath()));
+        sound.play();
     }
 
     @Override
     public void playWaveEndSound() {
-
+        MediaPlayer sound = new MediaPlayer(loadAudioFile(getWaveEndSoundFilePath()));
+        sound.play();
     }
 
     private Media loadAudioFile(String fileName) {
