@@ -54,6 +54,7 @@ public class DataRecorder {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
 			if (!tempFile.exists()) {
+                //Creates new Document if it doesnt exist
 				this.documentWriter = db.newDocument();
 			} else {
 				this.documentWriter = db.parse(RECORDED_DATA);
@@ -64,6 +65,7 @@ public class DataRecorder {
 
 		Element root;
         if (!tempFile.exists()) {
+            //Creates new Document if it doesnt exist
             root = this.documentWriter.createElement("recordedData");
             this.documentWriter.appendChild(root);
         } else {
