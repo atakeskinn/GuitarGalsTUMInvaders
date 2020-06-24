@@ -35,7 +35,7 @@ public class DataRecorder {
     private Transformer transformer;
     private Document documentWriter;
     private Element eventList;
-    private static final String RECORDED_DATA = "/TUM-space-invaders/src/main/resources/recordedData.xml";
+    private static final String RECORDED_DATA = "TUM-space-invaders/src/main/resources/recordedData.xml";
     private boolean newData; //boolean that is true when new Data needs to be saved
 
     public DataRecorder() {
@@ -49,21 +49,21 @@ public class DataRecorder {
         } catch (Exception e) {
             System.out.println("Error when creating DataRecorder: Transformer");
         }
-		File tempFile = new File(RECORDED_DATA);
+        File tempFile = new File(RECORDED_DATA);
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
-			if (!tempFile.exists()) {
+            if (!tempFile.exists()) {
                 //Creates new Document if it doesnt exist
-				this.documentWriter = db.newDocument();
-			} else {
-				this.documentWriter = db.parse(RECORDED_DATA);
-			}
+                this.documentWriter = db.newDocument();
+            } else {
+                this.documentWriter = db.parse(RECORDED_DATA);
+            }
         } catch (Exception e) {
             System.out.println("Error when creating DataRecorder: Document Writer");
         }
 
-		Element root;
+        Element root;
         if (!tempFile.exists()) {
             //Creates new Document if it doesnt exist
             root = this.documentWriter.createElement("recordedData");
@@ -88,7 +88,13 @@ public class DataRecorder {
         try {
             this.transformer.transform(source, result);
         } catch (Exception e) {
+            //if you get this Error try exchanging StreamResult a few lines above with
+            // = new StreamResult(RECORDED_DATA)
+            //if you get this Error and the Code already looks like the suggestion one line above try exchanging it with
+            // = new StreamResult(System.getProperty("user.dir")  + "/src/main/resources/recordedData.xml");
+            //This is an Error that occurs because StreamResult reads out directories differently when using maven / when not using maven
             System.out.println("Error when creating DataRecorder: Could not write System Name and Date");
+            System.out.println("Check last Exception Catch Block in DataRecorder for FIX/EXPLANATION");
             System.out.println(e);
         }
     }
@@ -106,7 +112,11 @@ public class DataRecorder {
             try {
                 this.recordedData.forEach(n -> {
                     Element event = this.documentWriter.createElement("Event");
-                    event.setAttribute("Time", n.getTime().getHour() + ":" + n.getTime().getMinute());
+                    if(n.getTime().getMinute() < 10) {
+                        event.setAttribute("Time", n.getTime().getHour() + ":0" + n.getTime().getMinute());
+                    } else {
+                        event.setAttribute("Time", n.getTime().getHour() + ":" + n.getTime().getMinute());
+                    }
                     event.setTextContent(n.getInfo());
                     this.eventList.appendChild(event);
                 });
@@ -129,7 +139,4 @@ public class DataRecorder {
         }
     }
 
-    public static void main(String[] args) {
-        DataRecorder data = new DataRecorder();
-    }
 }
