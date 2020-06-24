@@ -36,10 +36,4 @@ public class DataRecorder {
 		this.recordedData.clear();
 		//TODO: save data to xml file
 	}
-
-	public static void main(String[] args) {
-		DataRecorder data = new DataRecorder();
-		data.recordData("Test");
-		System.out.println(data.recordedData.get(0).getUsername() + " " + data.recordedData.get(0).getInfo() + " " + data.recordedData.get(0).getTime());
-	}
 }
