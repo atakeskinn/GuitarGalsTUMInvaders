@@ -35,7 +35,7 @@ public class DataRecorder {
     private Transformer transformer;
     private Document documentWriter;
     private Element eventList;
-    private static final String RECORDED_DATA = "TUM-space-invaders/src/main/resources/recordedData.xml";
+    private static final String RECORDED_DATA = "/TUM-space-invaders/src/main/resources/recordedData.xml";
     private boolean newData; //boolean that is true when new Data needs to be saved
 
     public DataRecorder() {
@@ -83,11 +83,13 @@ public class DataRecorder {
         player.appendChild(this.eventList);
 
         DOMSource source = new DOMSource(this.documentWriter);
-        StreamResult result = new StreamResult(RECORDED_DATA);
+        StreamResult result = new StreamResult(System.getProperty("user.dir")  + "/src/main/resources/recordedData.xml");
+
         try {
             this.transformer.transform(source, result);
         } catch (Exception e) {
             System.out.println("Error when creating DataRecorder: Could not write System Name and Date");
+            System.out.println(e);
         }
     }
 
@@ -125,5 +127,9 @@ public class DataRecorder {
         } else {
             //Does Nothing when there is no new Data to record and this Method is called up for performance Reasons
         }
+    }
+
+    public static void main(String[] args) {
+        DataRecorder data = new DataRecorder();
     }
 }
