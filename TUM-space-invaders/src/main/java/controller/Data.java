@@ -5,21 +5,19 @@ import java.time.ZonedDateTime;
 public class Data {
     private ZonedDateTime time;
     private String info;
+    private String username;
 
-    public Data(ZonedDateTime time, String info) {
-        this.time = time;
+    public Data(String info, String username) {
+        this.time = ZonedDateTime.now();
         this.info = info;
+        this.username = username;
     }
 
-    public Data recordData(String info) {
-        return new Data(ZonedDateTime.now(), info);
-    }
-
-    public ZonedDateTime getTime() {
-        return this.time;
-    }
+    public ZonedDateTime getTime() { return this.time; }
 
     public String getInfo() {
         return this.info;
     }
+
+    public String getUsername() { return this.username; }
 }
