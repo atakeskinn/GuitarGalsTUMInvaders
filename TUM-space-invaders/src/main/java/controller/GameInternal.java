@@ -23,6 +23,7 @@ public class GameInternal {
 
     private int playerScore;
     private List<Projectile> projectiles;
+    private List<Projectile> projectileBuffer;
     private PlayerShip playerShip;
     private Wave currentWave;
     private SoundManagerInterface soundManager;
@@ -35,6 +36,7 @@ public class GameInternal {
         this.screenSize = size;
         playerShip = new PlayerShip(screenSize); //250 ,30
         projectiles = new ArrayList<>();
+        projectileBuffer = new ArrayList<>();
         this.setWave();
         this.dataRecorder = new DataRecorder();
         //You use this by adding:
@@ -84,7 +86,7 @@ public class GameInternal {
             for (EnemyShip enemyShip : currentWave.getListOfEnemies()) {
                 boolean collided = testCollision(p.getPos(), p.getDimension(), enemyShip.getPos(), enemyShip.getDimension());
                 if(collided) {
-                    System.out.println("Collision!");
+                    //System.out.println("Collision!");
                     soundManager.playEnemyDeathSound();
                     enemyShip.setAlive(false);
                     p.setAlive(false);
@@ -95,6 +97,10 @@ public class GameInternal {
 
         currentWave.getListOfEnemies().removeIf(e -> !e.isAlive());
         projectiles.removeIf(p -> !p.isAlive());
+
+        projectiles.addAll(projectileBuffer);
+        projectileBuffer = new ArrayList<>();
+
 
 
         //for testing all sound files
@@ -157,7 +163,7 @@ public class GameInternal {
      */
     public void createProjectile(Point2D position, double speedY) {
         Projectile projectile = new SimpleProjectile(position, speedY);
-        projectiles.add(projectile);
+        projectileBuffer.add(projectile);
     }
 
     public boolean testCollision(Point2D pos1, Dimension2D dim1, Point2D pos2, Dimension2D dim2) {
