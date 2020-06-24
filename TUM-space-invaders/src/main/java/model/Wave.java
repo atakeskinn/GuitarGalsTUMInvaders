@@ -114,54 +114,12 @@ public class Wave {
         return index / width;
     }
 
-    private int getRightMostEnemyIndex() {
-
-        int rightMost = -1;
-		for (int i = 0; i < listOfEnemies.size(); i++) {
-			EnemyShip current = listOfEnemies.get(i);
-
-			if(current.isAlive()) {
-				if(rightMost < 0) {
-					rightMost = i;
-				} else if(getX(i) > getX(rightMost)) {
-					rightMost = i;
-				}
-			}
-		}
-		return rightMost;
-    }
-
     private Optional<EnemyShip> getRightMostEnemy() {
-    	int i = getRightMostEnemyIndex();
-    	if(i < 0)
-    		return Optional.empty();
-    	else
-    		return Optional.of(listOfEnemies.get(i));
-	}
-
-	private int getLeftMostEnemyIndex() {
-
-		int leftMost = -1;
-		for (int i = 0; i < listOfEnemies.size(); i++) {
-			EnemyShip current = listOfEnemies.get(i);
-
-			if(current.isAlive()) {
-				if(leftMost < 0) {
-					leftMost = i;
-				} else if(getX(i) < getX(leftMost)) {
-					leftMost = i;
-				}
-			}
-		}
-		return leftMost;
+    	return listOfEnemies.parallelStream().filter(EnemyShip::isAlive).max(Comparator.comparing(enemyShip -> enemyShip.getPos().getX()));
 	}
 
 	private Optional<EnemyShip> getLeftMostEnemy() {
-		int i = getLeftMostEnemyIndex();
-		if(i < 0)
-			return Optional.empty();
-		else
-			return Optional.of(listOfEnemies.get(i));
+		return listOfEnemies.parallelStream().filter(EnemyShip::isAlive).min(Comparator.comparing(enemyShip -> enemyShip.getPos().getX()));
 	}
 
 	public void update() {

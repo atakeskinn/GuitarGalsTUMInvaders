@@ -13,13 +13,14 @@ public class Toolbar extends ToolBar {
     private Button start;
     private Button stop;
     private Label scoreLabel;
-    private String score;
 
     public Toolbar(Application gameWindow) {
-        setScore(0);
         this.start = new Button("Start");
         this.stop = new Button("Stop");
-        this.scoreLabel = new Label("Score: " + score);
+        this.scoreLabel = new Label("Score: 00000000");
+        start.setFocusTraversable(false);
+        stop.setFocusTraversable(false);
+        scoreLabel.setFocusTraversable(false);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -28,6 +29,7 @@ public class Toolbar extends ToolBar {
         initActions();
         this.getItems().addAll(start, new Separator(), stop, spacer, scoreLabel, new Separator());
         this.setGameWindow(gameWindow);
+        setFocusTraversable(false);
     }
 
     /**
@@ -76,14 +78,5 @@ public class Toolbar extends ToolBar {
      */
     public void setGameWindow(Application gameWindow) {
         this.gameWindow = gameWindow;
-    }
-
-    /**
-     * Sets the score of the toolbar..
-     * @param score
-     */
-    public void setScore(int score) {
-        DecimalFormat formatter = new DecimalFormat("00000000");
-        this.score = formatter.format(score);
     }
 }

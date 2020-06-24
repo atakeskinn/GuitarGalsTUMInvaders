@@ -9,14 +9,14 @@ import java.util.List;
 
 public class GameInternal {
 
-    private static final String wave1 = "4, 6, 5, 20, 0," +
+    private static final String wave1 = "4, 6, 3, 20, 0," +
                                         "S S S S S S" +
                                         "S S S S S S" +
                                         "S S S S S S" +
                                         "S S S S S S";
 
 
-    private Dimension2D size;
+    private Dimension2D screenSize;
 
     private boolean isRunning;
     private Boolean gameWon;
@@ -28,17 +28,16 @@ public class GameInternal {
     private SoundManagerInterface soundManager;
     private DataRecorder dataRecorder;
 
-    public GameInternal(Dimension2D size) {
-        playerShip = new PlayerShip(); //250 ,30
+    public GameInternal(Dimension2D screenSize) {
+        playerShip = new PlayerShip(screenSize); //250 ,30
         projectiles = new ArrayList<>();
-        this.size = size;
+        this.screenSize = screenSize;
         this.setWave();
         this.dataRecorder = new DataRecorder();
         //You use this by adding:
         //"this.gameUI.getGameInternal().getDataRecorder().recordData(Data.recordData(String Info));"
         //to your Moment/Event in Code that you want to record
 
-        createProjectile(new Point2D(150, 450), -6);
     }
 
     public DataRecorder getDataRecorder() { return dataRecorder; }
@@ -64,13 +63,13 @@ public class GameInternal {
     }
 
     private void setWave() {
-        currentWave = Wave.parseWaveInfo(wave1, size);
+        currentWave = Wave.parseWaveInfo(wave1, screenSize);
     }
 
     public void update() {
         //TODO: Game Logic Here
 		//TODO: Move entities, check for collisions, shoot
-        currentWave.update();
+        playerShip.update();
 
         //update projectiles:
         for(Projectile p : projectiles) {
@@ -80,7 +79,7 @@ public class GameInternal {
             for (EnemyShip enemyShip : currentWave.getListOfEnemies()) {
                 boolean collided = testCollision(p.getPos(), p.getDimension(), enemyShip.getPos(), enemyShip.getDimension());
                 if(collided) {
-                    System.out.println("Collision!");
+                    playerScore += enemyShip.getValue();
                     soundManager.playEnemyDeathSound();
                     enemyShip.setAlive(false);
                     p.setAlive(false);
@@ -89,6 +88,8 @@ public class GameInternal {
         }
         currentWave.getListOfEnemies().removeIf(e -> !e.isAlive());
         projectiles.removeIf(p -> !p.isAlive());
+
+        currentWave.update();
 
 
     }
@@ -147,8 +148,8 @@ public class GameInternal {
         //p1s sides have no gap between them and p2s sides (better collision detection)
         return pos1.getX() < pos2.getX() + dim2.getWidth() &&
                 pos1.getX() + dim1.getWidth() > pos2.getX() &&
-                size.getHeight() - pos1.getY() < size.getHeight() - pos2.getY() + dim2.getHeight() &&
-                size.getHeight() - pos1.getY() + dim1.getHeight() > size.getHeight() - pos2.getY();
+                screenSize.getHeight() - pos1.getY() < screenSize.getHeight() - pos2.getY() + dim2.getHeight() &&
+                screenSize.getHeight() - pos1.getY() + dim1.getHeight() > screenSize.getHeight() - pos2.getY();
     }
 
 }

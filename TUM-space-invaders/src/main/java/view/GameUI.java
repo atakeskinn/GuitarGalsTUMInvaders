@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.EnemyShip;
+import model.PlayerShip;
 import model.Projectile;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class GameUI extends Canvas implements Runnable {
     // user control objects
     private PlayerController playerController;
 
-    private HashMap<String, Image> enemyImages;
+    private HashMap<String, Image> shipImages;
     private HashMap<String, Image> projectileImages;
 
     /**
@@ -110,18 +111,21 @@ public class GameUI extends Canvas implements Runnable {
         this.gameInternal = new GameInternal(this.size);
         this.gameInternal.setSoundManager(new SoundManager());
 
+        setFocusTraversable(true);
+        requestFocus();
 
         this.widthProperty().set(this.size.getWidth());
         this.heightProperty().set(this.size.getHeight());
 
         this.size = new Dimension2D(getWidth(), getHeight());
-        this.enemyImages = new HashMap<>();
+        this.shipImages = new HashMap<>();
         this.projectileImages = new HashMap<>();
         this.playerController = new PlayerController(this, this.gameInternal.getPlayerShip());
 
         //add image resources
-        enemyImages.put("simple", getImage("simple.png"));
-        enemyImages.put("greenie", getImage("greenie.png"));
+        shipImages.put("simple", getImage("simple.png"));
+        shipImages.put("greenie", getImage("greenie.png"));
+        shipImages.put("player", getImage("player.png"));
         //DO IT LIKE THIS ↓↓
         projectileImages.put("projectile", getImage("projectile.png"));
 
@@ -184,8 +188,8 @@ public class GameUI extends Canvas implements Runnable {
         if(!gameInternal.isRunning())
             return;
 
-        //update score
-        gameWindow.getToolbar().setScore(gameInternal.getPlayerScore());
+        //TODO update score
+        //gameWindow.getToolbar().setScore(gameInternal.getPlayerScore());
 
         //paint enemies
         for (EnemyShip enemyShip : gameInternal.getCurrentWave().getListOfEnemies()) {
@@ -198,7 +202,7 @@ public class GameUI extends Canvas implements Runnable {
         }
 
         //paint player ship
-        paintPlayerShip(graphics);
+        paintPlayerShip(gameInternal.getPlayerShip(), graphics);
     }
 
     /**
@@ -206,8 +210,10 @@ public class GameUI extends Canvas implements Runnable {
      *
      * @param graphics used to draw changes
      */
-    private void paintPlayerShip(GraphicsContext graphics) {
-        //TODO: implement after playership is implemented
+    private void paintPlayerShip(PlayerShip playerShip, GraphicsContext graphics) {
+        if (playerShip.isAlive())
+            graphics.drawImage(shipImages.get(playerShip.getImage()), playerShip.getPos().getX(), playerShip.getPos().getY(), playerShip.getDimension().getWidth(), playerShip.getDimension().getHeight());
+
     }
 
     /**
@@ -217,7 +223,7 @@ public class GameUI extends Canvas implements Runnable {
      */
     private void paintEnemyShip(EnemyShip ship, GraphicsContext graphics) {
         if (ship.isAlive())
-            graphics.drawImage(enemyImages.get(ship.getImage()), ship.getPos().getX(), ship.getPos().getY(), ship.getDimension().getWidth(), ship.getDimension().getHeight());
+            graphics.drawImage(shipImages.get(ship.getImage()), ship.getPos().getX(), ship.getPos().getY(), ship.getDimension().getWidth(), ship.getDimension().getHeight());
     }
 
     private void paintProjectile(Projectile projectile, GraphicsContext graphics) {
@@ -232,6 +238,7 @@ public class GameUI extends Canvas implements Runnable {
         if (this.gameInternal.isRunning()) {
             this.gameInternal.stopGame();
         }
+        playerController.remove();
     }
 
     /**
