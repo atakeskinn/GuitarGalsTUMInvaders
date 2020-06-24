@@ -1,0 +1,3 @@
+# Ignore recordedData, new recordedData.xml gets created when there isnt one on the System already
+/src/main/resources/recordedData.xml
+/target/classes/recordedData.xml

@@ -5,12 +5,10 @@ import java.time.ZonedDateTime;
 public class Data {
     private ZonedDateTime time;
     private String info;
-    private String username;
 
-    public Data(String info, String username) {
+    public Data(String info) {
         this.time = ZonedDateTime.now();
         this.info = info;
-        this.username = username;
     }
 
     public ZonedDateTime getTime() { return this.time; }
@@ -18,6 +16,4 @@ public class Data {
     public String getInfo() {
         return this.info;
     }
-
-    public String getUsername() { return this.username; }
 }
