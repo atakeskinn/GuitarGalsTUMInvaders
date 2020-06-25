@@ -4,6 +4,7 @@ package controller;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
+import view.GameUI;
 
 import javax.sql.RowSetInternal;
 import javax.sql.rowset.WebRowSet;
@@ -20,6 +21,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.net.URL;
 import java.nio.file.Files;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -35,7 +37,7 @@ public class DataRecorder {
     private Transformer transformer;
     private Document documentWriter;
     private Element eventList;
-    private static final String RECORDED_DATA = "TUM-space-invaders/src/main/resources/recordedData.xml";
+    private static final String RECORDED_DATA = "recordedData.xml";
     private boolean newData; //boolean that is true when new Data needs to be saved
 
     public DataRecorder() {
@@ -83,7 +85,7 @@ public class DataRecorder {
         player.appendChild(this.eventList);
 
         DOMSource source = new DOMSource(this.documentWriter);
-        StreamResult result = new StreamResult(System.getProperty("user.dir")  + "/src/main/resources/recordedData.xml");
+        StreamResult result = new StreamResult(RECORDED_DATA);//new StreamResult(System.getProperty("user.dir")  + "/src/main/resources/recordedData.xml");
 
         try {
             this.transformer.transform(source, result);
@@ -99,6 +101,10 @@ public class DataRecorder {
         }
     }
 
+    /**Record data to this DataRecorder object
+     *
+     * @param info data to be recorded
+     */
     public void recordData(String info) {
         this.newData = true;
         this.recordedData.add(new Data(info));
@@ -123,9 +129,11 @@ public class DataRecorder {
 
                 DOMSource source = new DOMSource(this.documentWriter);
                 StreamResult result = new StreamResult(RECORDED_DATA);
+                System.out.println("TRYING TO SAVE!");
                 this.transformer.transform(source, result);
 
-            } catch (Exception e) {
+            } catch (TransformerException e) {
+                e.printStackTrace();
                 System.out.println("An Error occurred when trying to save the recorded Data of your most recent Game");
             }
 

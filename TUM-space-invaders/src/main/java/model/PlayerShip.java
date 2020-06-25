@@ -39,9 +39,11 @@ public class PlayerShip {
 		pos = pos.add(speedX, 0);
 		if (pos.getX() <= 2) {
 			pos = new Point2D(2, pos.getY());
+			speedX = -speedX;
 		}
 		if (pos.getX() + 2 >= screenSize.getWidth() - dimension.getWidth()) {
 			pos = new Point2D(screenSize.getWidth() - dimension.getWidth() - 2, pos.getY());
+			speedX = -speedX;
 		}
 	}
 

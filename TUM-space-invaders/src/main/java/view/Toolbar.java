@@ -12,22 +12,19 @@ public class Toolbar extends ToolBar {
     private Application gameWindow;
     private Button start;
     private Button stop;
-    private Label scoreLabel;
 
     public Toolbar(Application gameWindow) {
         this.start = new Button("Start");
         this.stop = new Button("Stop");
-        this.scoreLabel = new Label("Score: 00000000");
         start.setFocusTraversable(false);
         stop.setFocusTraversable(false);
-        scoreLabel.setFocusTraversable(false);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         spacer.setMinWidth(Region.USE_PREF_SIZE);
 
         initActions();
-        this.getItems().addAll(start, new Separator(), stop, spacer, scoreLabel, new Separator());
+        this.getItems().addAll(start, new Separator(), stop, spacer, new Separator());
         this.setGameWindow(gameWindow);
         setFocusTraversable(false);
     }
@@ -39,6 +36,7 @@ public class Toolbar extends ToolBar {
         this.start.setOnAction(event -> getGameWindow().gameUI.startGame());
 
         this.stop.setOnAction(event -> {
+            if(!gameWindow.gameUI.getGameInternal().isRunning()) return;
             Toolbar.this.getGameWindow().gameUI.stopGame();
 
             ButtonType YES = new ButtonType("Yes", ButtonBar.ButtonData.YES);

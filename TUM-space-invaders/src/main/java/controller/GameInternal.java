@@ -42,9 +42,6 @@ public class GameInternal {
         //You use this by adding:
         //"this.gameUI.getGameInternal().getDataRecorder().recordData(Data.recordData(String Info));"
         //to your Moment/Event in Code that you want to record
-
-
-
     }
 
     public DataRecorder getDataRecorder() { return dataRecorder; }
@@ -90,6 +87,7 @@ public class GameInternal {
                     soundManager.playEnemyDeathSound();
                     enemyShip.setAlive(false);
                     p.setAlive(false);
+                    dataRecorder.recordData("Enemy killed!");
                 }
             }
         }
@@ -132,6 +130,7 @@ public class GameInternal {
     public void startGame() {
         playMusic();
         this.isRunning = true;
+        dataRecorder.recordData("Game started!");
     }
 
     /**
@@ -140,6 +139,8 @@ public class GameInternal {
     public void stopGame() {
         stopMusic();
         this.isRunning = false;
+        dataRecorder.recordData("Game stopped!");
+        dataRecorder.saveData();
     }
 
     /**
