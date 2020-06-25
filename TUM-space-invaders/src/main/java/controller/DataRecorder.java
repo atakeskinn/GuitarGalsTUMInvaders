@@ -45,12 +45,22 @@ public class DataRecorder {
         this.username = System.getProperty("user.name");
         this.newData = false;
 
+        //If this gets flagged i personally asked a Question about an Error i was having with this on StackOverflow
+        //https://stackoverflow.com/questions/62563126/
+        //This is still my code that i wrote on my own
+
+        //Creates File Transformer (for writing into the XML Document)
         try {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             this.transformer = transformerFactory.newTransformer();
         } catch (Exception e) {
             System.out.println("Error when creating DataRecorder: Transformer");
         }
+
+
+        //Checks if the File was already created
+        //=TRUE --> File gets parsed so we can write into it
+        //=FALSE --> File gets created
         File tempFile = new File(RECORDED_DATA);
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -65,6 +75,9 @@ public class DataRecorder {
             System.out.println("Error when creating DataRecorder: Document Writer");
         }
 
+        //Checks if the File was already created (/was not saved to that directory yet)
+        //TRUE --> gets the root element "recordedData" from File to write the Data into "recordedData"
+        //FALSE --> creates a new root element "recordedData"
         Element root;
         if (!tempFile.exists()) {
             //Creates new Document if it doesnt exist
@@ -74,19 +87,24 @@ public class DataRecorder {
             root = this.documentWriter.getDocumentElement();
         }
 
+        //Adds a Player Element with System User Name
+        //Appends this Element as a Child of Root in XML document
         Element player = this.documentWriter.createElement("Player");
         player.setAttribute("name", this.username);
         root.appendChild(player);
 
-
+        //Adds a eventList element with date & timezone
+        //Appends this EventList as child of player
         this.eventList = this.documentWriter.createElement("EventList");
         this.eventList.setAttribute("date", Date.from(java.time.ZonedDateTime.now().toInstant()).toString());
         this.eventList.setAttribute("timezone", java.time.ZonedDateTime.now().getZone().toString());
         player.appendChild(this.eventList);
 
+        //gets the source Document(if it exists already) and gets the directory to save into
         DOMSource source = new DOMSource(this.documentWriter);
-        StreamResult result = new StreamResult(RECORDED_DATA);//new StreamResult(System.getProperty("user.dir")  + "/src/main/resources/recordedData.xml");
+        StreamResult result = new StreamResult(RECORDED_DATA);
 
+        //transforms the xml Document (adding the new Data but not overwriting the old Data
         try {
             this.transformer.transform(source, result);
         } catch (Exception e) {
@@ -114,8 +132,11 @@ public class DataRecorder {
     }
 
     public void saveData() {
+        //Checks if newData is available
         if (newData) {
             try {
+                //goes through the List of Data Elements and parses them into the XML with time stamps
+                //appends all of them as Children of the EventList that was created when creating DataRecorder
                 this.recordedData.forEach(n -> {
                     Element event = this.documentWriter.createElement("Event");
                     if(n.getTime().getMinute() < 10) {
@@ -127,6 +148,7 @@ public class DataRecorder {
                     this.eventList.appendChild(event);
                 });
 
+                //Parses the Data to the XML Document same as in Constructor
                 DOMSource source = new DOMSource(this.documentWriter);
                 StreamResult result = new StreamResult(RECORDED_DATA);
                 System.out.println("TRYING TO SAVE!");
@@ -143,7 +165,7 @@ public class DataRecorder {
             this.newData = false;
             //Sets newData to false as all Data has been saved
         } else {
-            //Does Nothing when there is no new Data to record and this Method is called up for performance Reasons
+            //Does Nothing when there is no new Data to record and this Method is called
         }
     }
 
