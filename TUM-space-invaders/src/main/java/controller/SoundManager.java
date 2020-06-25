@@ -66,7 +66,7 @@ public class SoundManager implements SoundManagerInterface{
             // Loop for the main music sound:
             this.mediaPlayer.setOnEndOfMedia(() -> SoundManager.this.mediaPlayer.seek(Duration.ZERO));
             System.out.println("Started to play background music");
-            this.mediaPlayer.setVolume(0.5);;
+            this.mediaPlayer.setVolume(0.05);;
             this.mediaPlayer.play();
         }
     }
@@ -74,6 +74,7 @@ public class SoundManager implements SoundManagerInterface{
     @Override
     public void playPlayerShootSound() {
         MediaPlayer sound = new MediaPlayer(loadAudioFile(getPlayerShootSoundFilePath()));
+        sound.setVolume(0.1);
         sound.play();
         //this.playerShootSoundPlayed = true;
     }
@@ -93,6 +94,7 @@ public class SoundManager implements SoundManagerInterface{
     @Override
     public void playEnemyDeathSound() {
         MediaPlayer sound = new MediaPlayer(loadAudioFile(getEnemyDeathSoundFilePath()));
+        sound.setVolume(0.1);
         sound.play();
     }
 

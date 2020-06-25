@@ -26,6 +26,11 @@ public class GameInternal {
     private List<Projectile> projectileBuffer;
     private PlayerShip playerShip;
     private Wave currentWave;
+
+//    public SoundManagerInterface getSoundManager() {
+//        return soundManager;
+//    }
+
     private SoundManagerInterface soundManager;
     private DataRecorder dataRecorder;
 
@@ -165,6 +170,7 @@ public class GameInternal {
     public void createProjectile(Point2D position, double speedY) {
         Projectile projectile = new SimpleProjectile(position, speedY);
         projectileBuffer.add(projectile);
+        this.soundManager.playPlayerShootSound();
     }
 
     public boolean testCollision(Point2D pos1, Dimension2D dim1, Point2D pos2, Dimension2D dim2) {

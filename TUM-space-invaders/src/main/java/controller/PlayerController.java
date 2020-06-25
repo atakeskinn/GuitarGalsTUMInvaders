@@ -1,10 +1,8 @@
 package controller;
 
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import model.PlayerShip;
 import view.GameUI;
 
@@ -27,6 +25,7 @@ public class PlayerController {
             }
             if (key == KeyCode.SPACE) {
                 gameUI.getGameInternal().createProjectile(player.getPos().add(player.getDimension().getWidth() / 2, 0), -5);
+                //gameUI.getGameInternal().getSoundManager().playPlayerShootSound();
             }
         };
 

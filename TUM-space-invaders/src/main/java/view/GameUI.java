@@ -22,7 +22,8 @@ import java.util.HashMap;
 public class GameUI extends Canvas implements Runnable {
 
     //private static final Color backgroundColor = Color.WHITE;
-    private static final Image backgroundImage = getImage("spacebg.png");
+    //private static final Image backgroundImage = getImage("spacebg.png");
+    private static final Image backgroundImage = getImage("swamp.jpg");
 
     private static final int SLEEP_TIME = 1000 / 25; // this gives us 25fps
     private static final Dimension2D DEFAULT_SIZE = new Dimension2D(400, 600);
@@ -124,7 +125,7 @@ public class GameUI extends Canvas implements Runnable {
         this.playerController = new PlayerController(this, this.gameInternal.getPlayerShip());
 
         //add image resources
-        shipImages.put("simple", getImage("simple.png"));
+        shipImages.put("simple", getImage("shrek.png"));
         shipImages.put("greenie", getImage("greenie.png"));
         shipImages.put("player", getImage("player.png"));
         //DO IT LIKE THIS ↓↓

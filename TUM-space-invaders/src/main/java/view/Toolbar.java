@@ -5,7 +5,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
-import java.text.DecimalFormat;
 import java.util.Optional;
 
 public class Toolbar extends ToolBar {
@@ -14,7 +13,7 @@ public class Toolbar extends ToolBar {
     private Button stop;
 
     public Toolbar(Application gameWindow) {
-        this.start = new Button("Start");
+        this.start = new Button("Start: Invade Shrek's Swamp");
         this.stop = new Button("Stop");
         start.setFocusTraversable(false);
         stop.setFocusTraversable(false);
