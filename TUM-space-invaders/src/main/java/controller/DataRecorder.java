@@ -41,7 +41,8 @@ public class DataRecorder {
     private boolean newData; //boolean that is true when new Data needs to be saved
 
     public DataRecorder() {
-        recordedData = new ArrayList<Data>();
+        Data recordedDataList = new Data(new ArrayList<Data>());
+        recordedData = recordedDataList.getRecordedData();
         this.username = System.getProperty("user.name");
         this.newData = false;
 
