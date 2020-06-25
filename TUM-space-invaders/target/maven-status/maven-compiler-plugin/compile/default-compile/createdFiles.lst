@@ -2,6 +2,7 @@ view\Application.class
 controller\GameInternal.class
 controller\PlayerController.class
 model\SimpleProjectile.class
+controller\DataNode.class
 controller\SoundManagerInterface.class
 controller\Data.class
 model\PlayerShip.class
@@ -12,4 +13,5 @@ model\Wave.class
 view\Toolbar.class
 controller\SoundManager.class
 model\SimpleEnemy.class
+controller\DataCollection.class
 model\Projectile.class

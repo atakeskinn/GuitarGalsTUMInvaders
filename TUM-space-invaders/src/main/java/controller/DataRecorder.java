@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class DataRecorder {
-    private List<Data> recordedData;
+    private DataCollection recordedData;
     private String username;
     private Transformer transformer;
     private Document documentWriter;
@@ -41,8 +41,8 @@ public class DataRecorder {
     private boolean newData; //boolean that is true when new Data needs to be saved
 
     public DataRecorder() {
-        Data recordedDataList = new Data(new ArrayList<Data>());
-        recordedData = recordedDataList.getRecordedData();
+        this.recordedData = new DataCollection("TUMData");
+        //recordedData = recordedDataList.getRecordedData();
         this.username = System.getProperty("user.name");
         this.newData = false;
 
@@ -126,7 +126,7 @@ public class DataRecorder {
      */
     public void recordData(String info) {
         this.newData = true;
-        this.recordedData.add(new Data(info));
+        this.recordedData.addData(new DataNode(info));
         //You use this by adding:
         //"this.gameUI.getGameInternal().getDataRecorder().recordData(String info);"
         //to your Moment/Event in Code that you want to record
@@ -138,7 +138,7 @@ public class DataRecorder {
             try {
                 //goes through the List of Data Elements and parses them into the XML with time stamps
                 //appends all of them as Children of the EventList that was created when creating DataRecorder
-                this.recordedData.forEach(n -> {
+                this.recordedData.getData().forEach(n -> {
                     Element event = this.documentWriter.createElement("Event");
                     if(n.getTime().getMinute() < 10) {
                         event.setAttribute("Time", n.getTime().getHour() + ":0" + n.getTime().getMinute());
@@ -160,7 +160,7 @@ public class DataRecorder {
                 System.out.println("An Error occurred when trying to save the recorded Data of your most recent Game");
             }
 
-            this.recordedData.clear();
+            this.recordedData.getData().clear();
             //clears recorded Data to avoid writing the same data twice
             //using clear() because of better perfomance over removeAll()
             this.newData = false;
