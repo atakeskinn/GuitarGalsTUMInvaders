@@ -34,8 +34,6 @@ public class GameInternal {
     private SoundManagerInterface soundManager;
     private DataRecorder dataRecorder;
 
-    private int counter = 0;
-
 
     public GameInternal(Dimension2D size) {
         this.screenSize = size;
@@ -104,18 +102,6 @@ public class GameInternal {
         projectiles.addAll(projectileBuffer);
         projectileBuffer = new ArrayList<>();
 
-
-
-        //for testing all sound files
-        if (this.counter == 100){
-            //createProjectile(new Point2D(150, 450), -6);
-            //this.soundManager.playPlayerDeathSound();
-        }
-        if (this.counter < 101){
-            this.counter = this.counter + 1;
-        }else{
-            this.counter = 0;
-        }
 
 
     }
